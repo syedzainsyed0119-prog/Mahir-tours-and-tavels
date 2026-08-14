@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mahir Travel World | Explore the World</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        royal: {
+                            900: '#0a1628',
+                            800: '#0f1f3d',
+                            700: '#162b4d',
+                            600: '#1e3a8a',
+                            500: '#2563eb',
+                        },
+                        gold: {
+                            400: '#fbbf24',
+                            500: '#f59e0b',
+                            600: '#d97706',
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * { scroll-behavior: smooth; }
+
+        .hero-video-container {
+            position: relative;
+            height: 100vh;
+            min-height: 700px;
+            overflow: hidden;
+        }
+
+        .hero-video-container::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(10,22,40,0.85) 0%, rgba(15,31,61,0.7) 50%, rgba(10,22,40,0.9) 100%);
+            z-index: 1;
+        }
+
+        .hero-video-bg {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .glass-panel-solid {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        .tab-btn {
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .destination-card {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+        }
+
+        .destination-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+
+        .destination-card img {
+            transition: transform 0.7s ease;
+        }
+
+        .destination-card:hover img {
+            transform: scale(1.1);
+        }
+
+        .btn-gold {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            transition: all 0.3s ease;
+        }
+
+        .btn-gold:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(245, 158, 11, 0.4);
+        }
+
+        .floating-shape {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .input-field {
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .input-field:focus {
+            border-color: #f59e0b;
+            box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2);
+        }
+
+        .nav-link {
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #f59e0b;
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+
+        .scroll-indicator {
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b, #d97706);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .divider-gold {
+            height: 3px;
+            width: 60px;
+            background: linear-gradient(90deg, #f59e0b, #d97706);
+            border-radius: 2px;
+        }
+
+        .social-icon {
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            transform: translateY(-3px);
+            color: #f59e0b;
+        }
+
+        .contact-input {
+            transition: all 0.3s ease;
+            border: 1px solid #e5e7eb;
+        }
+
+        .contact-input:focus {
+            border-color: #1e3a8a;
+            box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.1);
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0a1628;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #f59e0b;
+            border-radius: 4px;
+        }
+
+        .plane-path {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: drawPath 3s ease forwards;
+        }
+
+        @keyframes drawPath {
+            to { stroke-dashoffset: 0; }
+        }
+
+        .stat-number {
+            font-variant-numeric: tabular-nums;
+        }
+    </style>
+<base target="_blank">
+</head>
+<body class="font-sans antialiased text-gray-800 bg-white">
+
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <a href="#" class="flex items-center gap-3 group">
+                    <div class="w-10 h-10 rounded-full bg-gradient-to-br from-gold-400 to-gold-600 flex items-center justify-center text-white font-bold text-lg shadow-lg group-hover:scale-110 transition-transform">
+                        M
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-serif text-xl font-bold text-white tracking-wide">Mahir Travel</span>
+                        <span class="text-xs text-gold-400 tracking-widest uppercase">World</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="#home" class="nav-link text-white/90 hover:text-white font-medium text-sm tracking-wide">Home</a>
+                    <a href="#destinations" class="nav-link text-white/90 hover:text-white font-medium text-sm tracking-wide">Destinations</a>
+                    <a href="#services" class="nav-link text-white/90 hover:text-white font-medium text-sm tracking-wide">Services</a>
+                    <a href="#about" class="nav-link text-white/90 hover:text-white font-medium text-sm tracking-wide">About</a>
+                    <a href="#contact" class="nav-link text-white/90 hover:text-white font-medium text-sm tracking-wide">Contact</a>
+                    <a href="#booking" class="btn-gold px-6 py-2.5 rounded-full text-white font-semibold text-sm shadow-lg">
+                        Book Now
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobileMenuBtn" class="md:hidden text-white text-2xl">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="mobile-menu fixed inset-y-0 right-0 w-72 bg-royal-900 z-50 shadow-2xl p-8">
+        <button id="closeMobileMenu" class="absolute top-6 right-6 text-white text-2xl">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="mt-16 flex flex-col gap-6">
+            <a href="#home" class="text-white text-lg font-medium hover:text-gold-400 transition">Home</a>
+            <a href="#destinations" class="text-white text-lg font-medium hover:text-gold-400 transition">Destinations</a>
+            <a href="#services" class="text-white text-lg font-medium hover:text-gold-400 transition">Services</a>
+            <a href="#about" class="text-white text-lg font-medium hover:text-gold-400 transition">About</a>
+            <a href="#contact" class="text-white text-lg font-medium hover:text-gold-400 transition">Contact</a>
+            <a href="#booking" class="btn-gold px-6 py-3 rounded-full text-white font-semibold text-center mt-4">Book Now</a>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-video-container flex items-center justify-center">
+        <!-- Video Background -->
+        <video class="hero-video-bg" autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1920">
+            <source src="https://assets.mixkit.co/videos/preview/mixkit-aerial-view-of-a-commercial-airplane-flying-above-the-clouds-34566-large.mp4" type="video/mp4">
+        </video>
+
+        <div class="hero-content w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20">
+            <div class="text-center mb-12">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-panel mb-6">
+                    <span class="w-2 h-2 rounded-full bg-gold-400 animate-pulse"></span>
+                    <span class="text-white/80 text-sm font-medium">Your Trusted Travel Partner Since 2010</span>
+                </div>
+
+                <h1 class="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight mb-6">
+                    Explore the World with<br>
+                    <span class="gradient-text">Mahir Travel World</span>
+                </h1>
+
+                <p class="text-white/70 text-lg md:text-xl max-w-2xl mx-auto mb-4 font-light">
+                    Your trusted gateway to global destinations, car rentals, flights, and premium hotel stays.
+                </p>
+
+                <div class="flex items-center justify-center gap-6 mt-8 text-white/60 text-sm">
+                    <span class="flex items-center gap-2"><i class="fas fa-plane text-gold-400"></i> Flights</span>
+                    <span class="flex items-center gap-2"><i class="fas fa-hotel text-gold-400"></i> Hotels</span>
+                    <span class="flex items-center gap-2"><i class="fas fa-car text-gold-400"></i> Car Rentals</span>
+                    <span class="flex items-center gap-2"><i class="fas fa-globe text-gold-400"></i> Tours</span>
+                </div>
+            </div>
+
+            <!-- Booking Widget -->
+            <div id="booking" class="max-w-5xl mx-auto">
+                <div class="glass-panel rounded-2xl p-1 shadow-2xl">
+                    <!-- Tabs -->
+                    <div class="flex gap-1 p-1 bg-white/5 rounded-xl mb-1">
+                        <button onclick="switchTab('flights')" id="tab-flights" class="tab-btn active flex-1 py-3 px-4 rounded-lg text-white font-medium text-sm flex items-center justify-center gap-2">
+                            <i class="fas fa-plane"></i> Flight Tickets
+                        </button>
+                        <button onclick="switchTab('hotels')" id="tab-hotels" class="tab-btn flex-1 py-3 px-4 rounded-lg text-white/70 font-medium text-sm flex items-center justify-center gap-2 hover:text-white hover:bg-white/10">
+                            <i class="fas fa-hotel"></i> Hotel Booking
+                        </button>
+                        <button onclick="switchTab('cars')" id="tab-cars" class="tab-btn flex-1 py-3 px-4 rounded-lg text-white/70 font-medium text-sm flex items-center justify-center gap-2 hover:text-white hover:bg-white/10">
+                            <i class="fas fa-car"></i> Car Rental
+                        </button>
+                    </div>
+
+                    <!-- Tab Contents -->
+                    <div class="glass-panel-solid rounded-xl p-6 md:p-8">
+                        <!-- Flights Tab -->
+                        <div id="content-flights" class="tab-content active">
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+                                <div class="lg:col-span-1">
+                                    <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">From</label>
+                                    <div class="relative">
+                                        <i class="fas fa-plane-departure absolute left-3 top-3.5 text-gray-400"></i>
+                                        <input type="text" placeholder="Origin City" class="input-field w-full pl-10 pr-4 py-3 rounded-xl bg-gray-50 text-gray-800 focus:outline-none">
+                                    </div>
+                                </div>
+                                <div class="lg:col-span-1">
+                                    <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">To</label>
+                                    <div class="relative">
+                                        <i class="fas fa-plane-arrival absolute left-3 top-3.5 text-gray-400"></i>
+                                        <input type="text" placeholder="Destination" class="input-field w-full pl-10 pr-4 py-3 rounded-xl bg-gray-50 text-gray-800 focus:outline-none">
+                                    </div>
+                                </div>
+                                <div class="lg:col-span-1">
+                                    <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Departure</label>
+                                    <div class="relative">
+                                        <i class="fas fa-calendar absolute left-3 top-3.5 text-gray-400"></i>
+                                        <input type="date" class="input-field w-full pl-10 pr-4 py-3 rounded-xl bg-gray-50 text-gray-800 focus:outline-none">
+                                    </div>
+                                </div>
+                                <div class="lg:col-span-1">
+                                    <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Class & Passengers</label>
+                                    <div class="relative">
+                                        <i class="fas fa-user absolute left-3 top-3.5 text-gray-400"></i>
+                                        <select class="input-field w-full pl-10 pr-4 py-3 rounded-xl bg-gray-50 text-gray-800 focus:outline-none appearance-none">
+                                            <option>Economy, 1 Passenger</option>
+                                            <option>Business, 1 Passenger</option>
+                                            <option>First Class, 1 Passenger</option>
+                                            <option>Economy, 2 Passengers</option>
+                                        </select>
+                                        <i class="fas fa-chevron-down absolute right-3 top-3.5 text-gray-400 text-xs"></i>
+                                    </div>
+                                </div>
+                                <div class="lg:col-span-1 flex items-end">
+                                    <button class="btn-gold w-full py-3.5 rounded-xl text-white font-semibold flex items-center justify-center gap-2 shadow-lg">
+                                        <i class="fas fa-search"></i> Search Availability
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Hotels Tab -->
+                        <div id="content-hotels" class="tab-content">
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                                <div class="lg:col-span-1">
+                                    <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Destination City</label>
+                                    <div class="relative">
+                                        <i class="fas fa-map-marker-alt absolute left-3 top-3.5 text-gray-400"></i>
+                                        <input type="text" placeholder="Where to?" class="input-field w-full pl-10 pr-4 py-3 rounded-xl bg-gray-50 text-gray-800 focus:outline-none">
+                                    </div>
+                                </div>
+                                <div class="lg:col-span-1">
+                                    <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Check-in</label>
+                                    <div class="relative">
+                                        <i class="fas fa-calendar-check absolute left-3 top-3.5 text-gray-400"></i>
+                                        <input type="date" class="input-field w-full pl-10 pr-4 py-3 rounded-xl bg-gray-50 text-gray-800 focus:outline-none">
+                                    </div>
+                                </div>
+                                <div class="lg:col-span-1">
+                                    <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Check-out & Guests</label>
+                                    <div class="relative">
+                                        <i class="fas fa-users absolute left-3 top-3.5 text-gray-400"></i>
+                                        <select class="input-field w-full pl-10 pr-4 py-3 rounded-xl bg-gray-50 text-gray-800 focus:outline-none appearance-none">
+                                            <option>1 Guest, 1 Room</option>
+                                            <option>2 Guests, 1 Room</option>
+                                            <option>2 Guests, 2 Rooms</option>
+                                            <option>Family (4 Guests)</option>
+                                        </select>
+                                        <i class="fas fa-chevron-down absolute right-3 top-3.5 text-gray-400 text-xs"></i>
+                                    </div>
+                                </div>
+                                <div class="lg:col-span-1 flex items-end">
+                                    <button class="btn-gold w-full py-3.5 rounded-xl text-white font-semibold flex items-center justify-center gap-2 shadow-lg">
+                                        <i class="fas fa-search"></i> Search Availability
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Cars Tab -->
+                        <div id="content-cars" class="tab-content">
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+                                <div class="lg:col-span-1">
+                                    <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Pick-up Location</label>
+                                    <div class="relative">
+                                        <i class="fas fa-map-pin absolute left-3 top-3.5 text-gray-400"></i>
+                                        <input type="text" placeholder="Pick-up City" class="input-field w-full pl-10 pr-4 py-3 rounded-xl bg-gray-50 text-gray-800 focus:outline-none">
+                                    </div>
+                                </div>
+                                <div class="lg:col-span-1">
+                                    <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Drop-off Location</label>
+                                    <div class="relative">
+                                        <i class="fas fa-flag-checkered absolute left-3 top-3.5 text-gray-400"></i>
+                                        <input type="text" placeholder="Drop-off City" class="input-field w-full pl-10 pr-4 py-3 rounded-xl bg-gray-50 text-gray-800 focus:outline-none">
+                                    </div>
+                                </div>
+                                <div class="lg:col-span-1">
+                                    <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Pick-up Date</label>
+                                    <div class="relative">
+                                        <i class="fas fa-calendar absolute left-3 top-3.5 text-gray-400"></i>
+                                        <input type="date" class="input-field w-full pl-10 pr-4 py-3 rounded-xl bg-gray-50 text-gray-800 focus:outline-none">
+                                    </div>
+                                </div>
+                                <div class="lg:col-span-1">
+                                    <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Time & Car Type</label>
+                                    <div class="relative">
+                                        <i class="fas fa-clock absolute left-3 top-3.5 text-gray-400"></i>
+                                        <select class="input-field w-full pl-10 pr-4 py-3 rounded-xl bg-gray-50 text-gray-800 focus:outline-none appearance-none">
+                                            <option>10:00 AM - Sedan</option>
+                                            <option>10:00 AM - SUV</option>
+                                            <option>10:00 AM - Luxury</option>
+                                            <option>02:00 PM - Sedan</option>
+                                        </select>
+                                        <i class="fas fa-chevron-down absolute right-3 top-3.5 text-gray-400 text-xs"></i>
+                                    </div>
+                                </div>
+                                <div class="lg:col-span-1 flex items-end">
+                                    <button class="btn-gold w-full py-3.5 rounded-xl text-white font-semibold flex items-center justify-center gap-2 shadow-lg">
+                                        <i class="fas fa-search"></i> Search Availability
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scroll Indicator -->
+            <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 scroll-indicator">
+                <a href="#destinations" class="text-white/50 hover:text-white transition">
+                    <i class="fas fa-chevron-down text-2xl"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="bg-royal-900 py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                <div class="reveal">
+                    <div class="text-4xl md:text-5xl font-bold text-gold-400 mb-2 stat-number">15+</div>
+                    <div class="text-white/60 text-sm uppercase tracking-wider">Years Experience</div>
+                </div>
+                <div class="reveal">
+                    <div class="text-4xl md:text-5xl font-bold text-gold-400 mb-2 stat-number">50K+</div>
+                    <div class="text-white/60 text-sm uppercase tracking-wider">Happy Travelers</div>
+                </div>
+                <div class="reveal">
+                    <div class="text-4xl md:text-5xl font-bold text-gold-400 mb-2 stat-number">100+</div>
+                    <div class="text-white/60 text-sm uppercase tracking-wider">Destinations</div>
+                </div>
+                <div class="reveal">
+                    <div class="text-4xl md:text-5xl font-bold text-gold-400 mb-2 stat-number">24/7</div>
+                    <div class="text-white/60 text-sm uppercase tracking-wider">Support</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Destinations Section -->
+    <section id="destinations" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <span class="text-gold-600 font-semibold text-sm uppercase tracking-widest">Discover</span>
+                <h2 class="font-serif text-4xl md:text-5xl font-bold text-royal-900 mt-3 mb-4">Popular Global Tours</h2>
+                <div class="divider-gold mx-auto mb-4"></div>
+                <p class="text-gray-600 max-w-2xl mx-auto">Explore our handpicked destinations across continents. From European architecture to Asian temples and tropical paradises.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Card 1: Paris -->
+                <div class="destination-card bg-white rounded-2xl shadow-lg overflow-hidden reveal">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=800" alt="Paris" class="w-full h-full object-cover">
+                        <div class="absolute top-4 right-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold text-royal-900">
+                            <i class="fas fa-star text-gold-500 mr-1"></i> 4.9
+                        </div>
+                        <div class="absolute bottom-4 left-4">
+                            <span class="bg-gold-500 text-white px-3 py-1 rounded-full text-xs font-semibold">Europe</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-serif text-2xl font-bold text-royal-900 mb-2">Paris, France</h3>
+                        <p class="text-gray-600 text-sm mb-4 line-clamp-2">Experience the City of Light with visits to the Eiffel Tower, Louvre Museum, and charming Seine River cruises.</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-gold-600 font-bold text-lg">₹89,999<span class="text-gray-400 text-sm font-normal">/person</span></span>
+                            <button class="px-5 py-2 bg-royal-900 text-white rounded-lg text-sm font-medium hover:bg-royal-700 transition">View Itinerary</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2: Bali -->
+                <div class="destination-card bg-white rounded-2xl shadow-lg overflow-hidden reveal">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=800" alt="Bali" class="w-full h-full object-cover">
+                        <div class="absolute top-4 right-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold text-royal-900">
+                            <i class="fas fa-star text-gold-500 mr-1"></i> 4.8
+                        </div>
+                        <div class="absolute bottom-4 left-4">
+                            <span class="bg-gold-500 text-white px-3 py-1 rounded-full text-xs font-semibold">Asia</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-serif text-2xl font-bold text-royal-900 mb-2">Bali, Indonesia</h3>
+                        <p class="text-gray-600 text-sm mb-4 line-clamp-2">Discover tropical paradise with ancient temples, rice terraces, pristine beaches, and vibrant culture.</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-gold-600 font-bold text-lg">₹45,999<span class="text-gray-400 text-sm font-normal">/person</span></span>
+                            <button class="px-5 py-2 bg-royal-900 text-white rounded-lg text-sm font-medium hover:bg-royal-700 transition">View Itinerary</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3: Dubai -->
+                <div class="destination-card bg-white rounded-2xl shadow-lg overflow-hidden reveal">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=800" alt="Dubai" class="w-full h-full object-cover">
+                        <div class="absolute top-4 right-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold text-royal-900">
+                            <i class="fas fa-star text-gold-500 mr-1"></i> 4.9
+                        </div>
+                        <div class="absolute bottom-4 left-4">
+                            <span class="bg-gold-500 text-white px-3 py-1 rounded-full text-xs font-semibold">Middle East</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-serif text-2xl font-bold text-royal-900 mb-2">Dubai, UAE</h3>
+                        <p class="text-gray-600 text-sm mb-4 line-clamp-2">Luxury meets tradition in this dazzling metropolis. Burj Khalifa, desert safaris, and world-class shopping.</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-gold-600 font-bold text-lg">₹65,999<span class="text-gray-400 text-sm font-normal">/person</span></span>
+                            <button class="px-5 py-2 bg-royal-900 text-white rounded-lg text-sm font-medium hover:bg-royal-700 transition">View Itinerary</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 4: Switzerland -->
+                <div class="destination-card bg-white rounded-2xl shadow-lg overflow-hidden reveal">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1530122037265-a5f1f91d3b99?w=800" alt="Switzerland" class="w-full h-full object-cover">
+                        <div class="absolute top-4 right-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold text-royal-900">
+                            <i class="fas fa-star text-gold-500 mr-1"></i> 5.0
+                        </div>
+                        <div class="absolute bottom-4 left-4">
+                            <span class="bg-gold-500 text-white px-3 py-1 rounded-full text-xs font-semibold">Europe</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-serif text-2xl font-bold text-royal-900 mb-2">Swiss Alps</h3>
+                        <p class="text-gray-600 text-sm mb-4 line-clamp-2">Breathtaking mountain landscapes, scenic train rides, and charming villages in the heart of Europe.</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-gold-600 font-bold text-lg">₹1,25,999<span class="text-gray-400 text-sm font-normal">/person</span></span>
+                            <button class="px-5 py-2 bg-royal-900 text-white rounded-lg text-sm font-medium hover:bg-royal-700 transition">View Itinerary</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 5: Japan -->
+                <div class="destination-card bg-white rounded-2xl shadow-lg overflow-hidden reveal">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=800" alt="Japan" class="w-full h-full object-cover">
+                        <div class="absolute top-4 right-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold text-royal-900">
+                            <i class="fas fa-star text-gold-500 mr-1"></i> 4.7
+                        </div>
+                        <div class="absolute bottom-4 left-4">
+                            <span class="bg-gold-500 text-white px-3 py-1 rounded-full text-xs font-semibold">Asia</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-serif text-2xl font-bold text-royal-900 mb-2">Kyoto, Japan</h3>
+                        <p class="text-gray-600 text-sm mb-4 line-clamp-2">Ancient temples, traditional tea ceremonies, and stunning cherry blossoms in Japan's cultural capital.</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-gold-600 font-bold text-lg">₹95,999<span class="text-gray-400 text-sm font-normal">/person</span></span>
+                            <button class="px-5 py-2 bg-royal-900 text-white rounded-lg text-sm font-medium hover:bg-royal-700 transition">View Itinerary</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 6: Maldives -->
+                <div class="destination-card bg-white rounded-2xl shadow-lg overflow-hidden reveal">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1514282401047-d79a71a590e8?w=800" alt="Maldives" class="w-full h-full object-cover">
+                        <div class="absolute top-4 right-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold text-royal-900">
+                            <i class="fas fa-star text-gold-500 mr-1"></i> 4.9
+                        </div>
+                        <div class="absolute bottom-4 left-4">
+                            <span class="bg-gold-500 text-white px-3 py-1 rounded-full text-xs font-semibold">Tropical</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-serif text-2xl font-bold text-royal-900 mb-2">Maldives</h3>
+                        <p class="text-gray-600 text-sm mb-4 line-clamp-2">Crystal-clear waters, overwater villas, and pristine coral reefs in this Indian Ocean paradise.</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-gold-600 font-bold text-lg">₹75,999<span class="text-gray-400 text-sm font-normal">/person</span></span>
+                            <button class="px-5 py-2 bg-royal-900 text-white rounded-lg text-sm font-medium hover:bg-royal-700 transition">View Itinerary</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-12 reveal">
+                <button class="btn-gold px-8 py-4 rounded-full text-white font-semibold text-lg shadow-xl">
+                    View All Destinations <i class="fas fa-arrow-right ml-2"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <span class="text-gold-600 font-semibold text-sm uppercase tracking-widest">What We Offer</span>
+                <h2 class="font-serif text-4xl md:text-5xl font-bold text-royal-900 mt-3 mb-4">Our Premium Services</h2>
+                <div class="divider-gold mx-auto mb-4"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="reveal group p-8 rounded-2xl bg-gray-50 hover:bg-royal-900 transition-all duration-500 text-center">
+                    <div class="w-16 h-16 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-gold-400 to-gold-600 flex items-center justify-center text-white text-2xl shadow-lg group-hover:scale-110 transition-transform">
+                        <i class="fas fa-plane"></i>
+                    </div>
+                    <h3 class="font-serif text-xl font-bold text-royal-900 group-hover:text-white mb-3 transition">Flight Booking</h3>
+                    <p class="text-gray-600 group-hover:text-white/70 text-sm transition">Best deals on domestic and international flights with 24/7 support.</p>
+                </div>
+
+                <div class="reveal group p-8 rounded-2xl bg-gray-50 hover:bg-royal-900 transition-all duration-500 text-center">
+                    <div class="w-16 h-16 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-gold-400 to-gold-600 flex items-center justify-center text-white text-2xl shadow-lg group-hover:scale-110 transition-transform">
+                        <i class="fas fa-hotel"></i>
+                    </div>
+                    <h3 class="font-serif text-xl font-bold text-royal-900 group-hover:text-white mb-3 transition">Hotel Stays</h3>
+                    <p class="text-gray-600 group-hover:text-white/70 text-sm transition">Premium accommodations from budget to luxury resorts worldwide.</p>
+                </div>
+
+                <div class="reveal group p-8 rounded-2xl bg-gray-50 hover:bg-royal-900 transition-all duration-500 text-center">
+                    <div class="w-16 h-16 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-gold-400 to-gold-600 flex items-center justify-center text-white text-2xl shadow-lg group-hover:scale-110 transition-transform">
+                        <i class="fas fa-car"></i>
+                    </div>
+                    <h3 class="font-serif text-xl font-bold text-royal-900 group-hover:text-white mb-3 transition">Car Rentals</h3>
+                    <p class="text-gray-600 group-hover:text-white/70 text-sm transition">Flexible car rental options with competitive rates across all destinations.</p>
+                </div>
+
+                <div class="reveal group p-8 rounded-2xl bg-gray-50 hover:bg-royal-900 transition-all duration-500 text-center">
+                    <div class="w-16 h-16 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-gold-400 to-gold-600 flex items-center justify-center text-white text-2xl shadow-lg group-hover:scale-110 transition-transform">
+                        <i class="fas fa-passport"></i>
+                    </div>
+                    <h3 class="font-serif text-xl font-bold text-royal-900 group-hover:text-white mb-3 transition">Visa Assistance</h3>
+                    <p class="text-gray-600 group-hover:text-white/70 text-sm transition">Hassle-free visa processing and documentation support for all countries.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About / Why Choose Us -->
+    <section id="about" class="py-20 bg-royal-900 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+            <img src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=1920" alt="" class="w-full h-full object-cover">
+        </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <div class="reveal">
+                    <span class="text-gold-400 font-semibold text-sm uppercase tracking-widest">About Us</span>
+                    <h2 class="font-serif text-4xl md:text-5xl font-bold text-white mt-3 mb-6">Why Travel With Mahir?</h2>
+                    <div class="divider-gold mb-6"></div>
+                    <p class="text-white/70 text-lg mb-6 leading-relaxed">
+                        Based in the heart of Kanakapura, Karnataka, Mahir Travel World has been crafting unforgettable journeys for over 15 years. We believe travel is not just about reaching a destination — it's about the experiences along the way.
+                    </p>
+                    <p class="text-white/70 text-lg mb-8 leading-relaxed">
+                        Our team of expert travel consultants ensures every detail is perfect, from flight bookings and hotel reservations to curated itineraries and local experiences.
+                    </p>
+
+                    <div class="grid grid-cols-2 gap-6">
+                        <div class="flex items-start gap-3">
+                            <div class="w-10 h-10 rounded-lg bg-gold-500/20 flex items-center justify-center text-gold-400 flex-shrink-0">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-semibold">Best Price Guarantee</h4>
+                                <p class="text-white/50 text-sm">Competitive rates on all bookings</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <div class="w-10 h-10 rounded-lg bg-gold-500/20 flex items-center justify-center text-gold-400 flex-shrink-0">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-semibold">Expert Guidance</h4>
+                                <p class="text-white/50 text-sm">Personalized travel planning</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <div class="w-10 h-10 rounded-lg bg-gold-500/20 flex items-center justify-center text-gold-400 flex-shrink-0">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-semibold">Secure Bookings</h4>
+                                <p class="text-white/50 text-sm">100% safe payment processing</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <div class="w-10 h-10 rounded-lg bg-gold-500/20 flex items-center justify-center text-gold-400 flex-shrink-0">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-semibold">24/7 Support</h4>
+                                <p class="text-white/50 text-sm">Always here when you need us</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reveal relative">
+                    <div class="relative rounded-2xl overflow-hidden shadow-2xl">
+                        <img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=800" alt="Travel Experience" class="w-full h-[500px] object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-royal-900/80 to-transparent"></div>
+                        <div class="absolute bottom-8 left-8 right-8">
+                            <div class="glass-panel rounded-xl p-6">
+                                <p class="text-white font-serif text-xl italic">"The world is a book, and those who do not travel read only one page."</p>
+                                <p class="text-gold-400 mt-2 text-sm font-medium">— Saint Augustine</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="absolute -top-6 -right-6 w-24 h-24 bg-gold-500 rounded-full opacity-20 floating-shape"></div>
+                    <div class="absolute -bottom-6 -left-6 w-32 h-32 bg-gold-500 rounded-full opacity-10 floating-shape" style="animation-delay: 1s;"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <span class="text-gold-600 font-semibold text-sm uppercase tracking-widest">Testimonials</span>
+                <h2 class="font-serif text-4xl md:text-5xl font-bold text-royal-900 mt-3 mb-4">What Travelers Say</h2>
+                <div class="divider-gold mx-auto mb-4"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="reveal bg-white p-8 rounded-2xl shadow-lg relative">
+                    <div class="text-gold-400 text-4xl mb-4"><i class="fas fa-quote-left"></i></div>
+                    <p class="text-gray-600 mb-6 italic">"Mahir Travel World made our Europe trip absolutely seamless. From flights to hotels, everything was perfectly arranged. Highly recommended!"</p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full bg-royal-900 flex items-center justify-center text-white font-bold">RK</div>
+                        <div>
+                            <h4 class="font-semibold text-royal-900">Ravi Kumar</h4>
+                            <p class="text-gray-500 text-sm">Bangalore, Karnataka</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reveal bg-white p-8 rounded-2xl shadow-lg relative">
+                    <div class="text-gold-400 text-4xl mb-4"><i class="fas fa-quote-left"></i></div>
+                    <p class="text-gray-600 mb-6 italic">"The best travel agency in Kanakapura! They got us amazing deals on our Maldives honeymoon. Professional and friendly service throughout."</p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full bg-royal-900 flex items-center justify-center text-white font-bold">SP</div>
+                        <div>
+                            <h4 class="font-semibold text-royal-900">Sneha Patel</h4>
+                            <p class="text-gray-500 text-sm">Mysore, Karnataka</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reveal bg-white p-8 rounded-2xl shadow-lg relative">
+                    <div class="text-gold-400 text-4xl mb-4"><i class="fas fa-quote-left"></i></div>
+                    <p class="text-gray-600 mb-6 italic">"I've been booking all my business trips with Mahir for 3 years now. Their car rental service and hotel bookings are always top-notch."</p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full bg-royal-900 flex items-center justify-center text-white font-bold">AM</div>
+                        <div>
+                            <h4 class="font-semibold text-royal-900">Arun Murthy</h4>
+                            <p class="text-gray-500 text-sm">Kanakapura, Karnataka</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact & Footer -->
+    <footer id="contact" class="bg-royal-900 text-white">
+        <!-- Contact Section -->
+        <div class="py-20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+                    <!-- Contact Info -->
+                    <div class="reveal">
+                        <span class="text-gold-400 font-semibold text-sm uppercase tracking-widest">Get In Touch</span>
+                        <h2 class="font-serif text-4xl md:text-5xl font-bold text-white mt-3 mb-6">Plan Your Next Adventure</h2>
+                        <div class="divider-gold mb-8"></div>
+
+                        <div class="space-y-6">
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 rounded-xl bg-gold-500/20 flex items-center justify-center text-gold-400 flex-shrink-0">
+                                    <i class="fas fa-map-marker-alt text-lg"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-white mb-1">Visit Our Office</h4>
+                                    <p class="text-white/60">Opposite to Kalyani Medicals<br>Kanakapura, Karnataka 562117</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 rounded-xl bg-gold-500/20 flex items-center justify-center text-gold-400 flex-shrink-0">
+                                    <i class="fas fa-phone-alt text-lg"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-white mb-1">Call Us</h4>
+                                    <p class="text-white/60">+91 98449 88855</p>
+                                    <p class="text-white/40 text-sm">Mon - Sat: 9:00 AM - 8:00 PM</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 rounded-xl bg-gold-500/20 flex items-center justify-center text-gold-400 flex-shrink-0">
+                                    <i class="fas fa-envelope text-lg"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-white mb-1">Email Us</h4>
+                                    <p class="text-white/60">info@mahirtravelworld.com</p>
+                                    <p class="text-white/60">bookings@mahirtravelworld.com</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Social Links -->
+                        <div class="mt-10">
+                            <h4 class="font-semibold text-white mb-4">Follow Us</h4>
+                            <div class="flex gap-4">
+                                <a href="#" class="social-icon w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-gold-500">
+                                    <i class="fab fa-facebook-f"></i>
+                                </a>
+                                <a href="#" class="social-icon w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-gold-500">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                                <a href="#" class="social-icon w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-gold-500">
+                                    <i class="fab fa-whatsapp"></i>
+                                </a>
+                                <a href="#" class="social-icon w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-gold-500">
+                                    <i class="fab fa-youtube"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Contact Form -->
+                    <div class="reveal">
+                        <div class="bg-white/5 backdrop-blur-lg rounded-2xl p-8 border border-white/10">
+                            <h3 class="font-serif text-2xl font-bold text-white mb-6">Send Us a Message</h3>
+                            <form class="space-y-4">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-white/60 text-sm mb-2">First Name</label>
+                                        <input type="text" class="contact-input w-full px-4 py-3 rounded-xl bg-white/10 text-white placeholder-white/30 focus:outline-none" placeholder="John">
+                                    </div>
+                                    <div>
+                                        <label class="block text-white/60 text-sm mb-2">Last Name</label>
+                                        <input type="text" class="contact-input w-full px-4 py-3 rounded-xl bg-white/10 text-white placeholder-white/30 focus:outline-none" placeholder="Doe">
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block text-white/60 text-sm mb-2">Email Address</label>
+                                    <input type="email" class="contact-input w-full px-4 py-3 rounded-xl bg-white/10 text-white placeholder-white/30 focus:outline-none" placeholder="john@example.com">
+                                </div>
+                                <div>
+                                    <label class="block text-white/60 text-sm mb-2">Phone Number</label>
+                                    <input type="tel" class="contact-input w-full px-4 py-3 rounded-xl bg-white/10 text-white placeholder-white/30 focus:outline-none" placeholder="+91 98765 43210">
+                                </div>
+                                <div>
+                                    <label class="block text-white/60 text-sm mb-2">Interested Destination</label>
+                                    <select class="contact-input w-full px-4 py-3 rounded-xl bg-white/10 text-white focus:outline-none appearance-none">
+                                        <option class="text-gray-800">Select a destination</option>
+                                        <option class="text-gray-800">Europe</option>
+                                        <option class="text-gray-800">Asia</option>
+                                        <option class="text-gray-800">Middle East</option>
+                                        <option class="text-gray-800">Americas</option>
+                                        <option class="text-gray-800">Africa</option>
+                                        <option class="text-gray-800">Other</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-white/60 text-sm mb-2">Message</label>
+                                    <textarea rows="4" class="contact-input w-full px-4 py-3 rounded-xl bg-white/10 text-white placeholder-white/30 focus:outline-none resize-none" placeholder="Tell us about your travel plans..."></textarea>
+                                </div>
+                                <button type="submit" class="btn-gold w-full py-4 rounded-xl text-white font-semibold text-lg shadow-lg">
+                                    Send Message <i class="fas fa-paper-plane ml-2"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Bottom -->
+        <div class="border-t border-white/10 py-8">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-full bg-gradient-to-br from-gold-400 to-gold-600 flex items-center justify-center text-white font-bold text-sm">M</div>
+                        <span class="font-serif text-white font-bold">Mahir Travel World</span>
+                    </div>
+                    <div class="flex items-center gap-6 text-white/50 text-sm">
+                        <a href="#" class="hover:text-gold-400 transition">Terms of Service</a>
+                        <a href="#" class="hover:text-gold-400 transition">Privacy Policy</a>
+                        <a href="#" class="hover:text-gold-400 transition">Refund Policy</a>
+                        <a href="#" class="hover:text-gold-400 transition">FAQ</a>
+                    </div>
+                    <p class="text-white/40 text-sm">© 2024 Mahir Travel World. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="fixed bottom-8 right-8 w-12 h-12 rounded-full bg-gold-500 text-white shadow-lg flex items-center justify-center opacity-0 invisible transition-all duration-300 hover:bg-gold-600 z-40">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        // Tab Switching
+        function switchTab(tabName) {
+            // Reset all tabs
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+                btn.classList.add('text-white/70');
+                btn.classList.remove('text-white');
+            });
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+
+            // Activate selected tab
+            document.getElementById('tab-' + tabName).classList.add('active');
+            document.getElementById('tab-' + tabName).classList.remove('text-white/70');
+            document.getElementById('content-' + tabName).classList.add('active');
+        }
+
+        // Navbar Scroll Effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('bg-royal-900/95', 'backdrop-blur-lg', 'shadow-lg');
+            } else {
+                navbar.classList.remove('bg-royal-900/95', 'backdrop-blur-lg', 'shadow-lg');
+            }
+        });
+
+        // Mobile Menu
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const closeMobileMenu = document.getElementById('closeMobileMenu');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.add('open');
+        });
+
+        closeMobileMenu.addEventListener('click', () => {
+            mobileMenu.classList.remove('open');
+        });
+
+        // Close mobile menu on link click
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('open');
+            });
+        });
+
+        // Scroll Reveal Animation
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        revealElements.forEach(el => revealObserver.observe(el));
+
+        // Back to Top Button
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 500) {
+                backToTop.classList.remove('opacity-0', 'invisible');
+                backToTop.classList.add('opacity-100', 'visible');
+            } else {
+                backToTop.classList.add('opacity-0', 'invisible');
+                backToTop.classList.remove('opacity-100', 'visible');
+            }
+        });
+
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Form submission handler (demo)
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for reaching out! Our team will contact you shortly.');
+        });
+    </script>
+</body>
+</html>
